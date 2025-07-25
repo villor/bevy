@@ -36,14 +36,20 @@ pub struct CheckboxProps {
 
 /// Marker for the checkbox frame (contains both checkbox and label)
 #[derive(Component, Default, Clone)]
+#[require(Hovered, ThemeFontColor(tokens::CHECKBOX_TEXT))]
 struct CheckboxFrame;
 
 /// Marker for the checkbox outline
 #[derive(Component, Default, Clone)]
+#[require(
+    ThemeBackgroundColor(tokens::CHECKBOX_BG),
+    ThemeBorderColor(tokens::CHECKBOX_BORDER)
+)]
 struct CheckboxOutline;
 
 /// Marker for the checkbox check mark
 #[derive(Component, Default, Clone)]
+#[require(ThemeBorderColor(tokens::CHECKBOX_MARK))]
 struct CheckboxMark;
 
 /// Checkbox scene function.
@@ -63,11 +69,9 @@ pub fn checkbox(props: CheckboxProps) -> impl Scene {
             on_change: {props.on_change.clone()},
         }
         CheckboxFrame
-        Hovered
         // TODO: port CursorIcon to GetTemplate
         // CursorIcon::System(bevy_window::SystemCursorIcon::Pointer)
         TabIndex(0)
-        ThemeFontColor(tokens::CHECKBOX_TEXT)
         InheritableFont {
             font: fonts::REGULAR,
             font_size: 14.0,
@@ -80,8 +84,6 @@ pub fn checkbox(props: CheckboxProps) -> impl Scene {
             }
             CheckboxOutline
             BorderRadius::all(Val::Px(4.0))
-            ThemeBackgroundColor(tokens::CHECKBOX_BG)
-            ThemeBorderColor(tokens::CHECKBOX_BORDER)
             [(
                 // Cheesy checkmark: rotated node with L-shaped border.
                 Node {
@@ -97,7 +99,6 @@ pub fn checkbox(props: CheckboxProps) -> impl Scene {
                 }
                 UiTransform::from_rotation(Rot2::FRAC_PI_4)
                 CheckboxMark
-                ThemeBorderColor(tokens::CHECKBOX_MARK)
             )]
         )]
     }

@@ -25,6 +25,11 @@ use bevy_winit::cursor::CursorIcon;
 /// Color variants for buttons. This also functions as a component used by the dynamic styling
 /// system to identify which entities are buttons.
 #[derive(Component, Default, Clone)]
+#[require(
+    Hovered,
+    ThemeBackgroundColor(tokens::BUTTON_BG),
+    ThemeFontColor(tokens::BUTTON_TEXT)
+)]
 pub enum ButtonVariant {
     /// The standard button appearance
     #[default]
@@ -68,12 +73,9 @@ pub fn button(props: ButtonProps) -> impl Scene {
         }
         template_value(props.variant)
         template_value(props.corners.to_border_radius(4.0))
-        Hovered
         // TODO: port CursonIcon to GetTemplate
         // CursorIcon::System(bevy_window::SystemCursorIcon::Pointer)
         TabIndex(0)
-        ThemeBackgroundColor(tokens::BUTTON_BG)
-        ThemeFontColor(tokens::BUTTON_TEXT)
         InheritableFont {
             font: fonts::REGULAR,
             font_size: 14.0,
@@ -99,7 +101,6 @@ pub fn tool_button(props: ButtonProps) -> impl Scene {
         }
         template_value(props.variant)
         template_value(props.corners.to_border_radius(3.0))
-        Hovered
         // TODO: port CursonIcon to GetTemplate
         // CursorIcon::System(bevy_window::SystemCursorIcon::Pointer)
         TabIndex(0)
