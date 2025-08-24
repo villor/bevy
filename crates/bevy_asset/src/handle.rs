@@ -204,6 +204,7 @@ impl<T: Asset> GetTemplate for Handle<T> {
 #[derive(Reflect)]
 pub struct HandleTemplate<T> {
     path: AssetPath<'static>,
+    #[reflect(ignore)]
     marker: PhantomData<T>,
 }
 
