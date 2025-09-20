@@ -10,6 +10,8 @@ use crate::{
 };
 use alloc::{boxed::Box, vec, vec::Vec};
 use bevy_platform::collections::hash_map::Entry;
+#[cfg(feature = "bevy_reflect")]
+use bevy_reflect::Reflect;
 use bevy_utils::TypeIdMap;
 use core::any::{Any, TypeId};
 use downcast_rs::{impl_downcast, Downcast};
@@ -112,6 +114,7 @@ impl<T: Template<Output: Bundle> + Send + Sync + 'static> ErasedTemplate for T {
 
 // TODO: Consider cutting this
 /// A [`Template`] implementation that holds _either_ a [`Template`] value _or_ the [`Template::Output`] value.
+#[cfg_attr(feature = "bevy_reflect", derive(Reflect))]
 pub enum TemplateField<T: Template> {
     /// A [`Template`].
     Template(T),
